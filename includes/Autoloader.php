@@ -2,9 +2,16 @@
 namespace EasyAiBlogger\Includes;
 
 class Autoloader {
+    private static $registered = false;
+    private static $loadedFiles = [];
+
     public static function register() {
-        spl_autoload_register([self::class, 'autoload']);
+        if (!self::$registered) {
+            spl_autoload_register([self::class, 'autoload']);
+            self::$registered = true;
+        }
     }
+
     public static function autoload($className) {
         // Only autoload EasyAiBlogger classes
         if (strpos($className, 'EasyAiBlogger\\') !== 0) {
@@ -14,8 +21,9 @@ class Autoloader {
         $baseDir = dirname(__DIR__, 1) . DIRECTORY_SEPARATOR;
         $relativeClass = substr($className, strlen('EasyAiBlogger\\'));
         $file = $baseDir . str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $relativeClass) . '.php';
-        if (file_exists($file)) {
+        if (file_exists($file) && empty(self::$loadedFiles[$file])) {
             require_once $file;
+            self::$loadedFiles[$file] = true;
         }
     }
 }

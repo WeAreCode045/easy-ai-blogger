@@ -23,10 +23,10 @@ class AdminPage {
     }
 
     public static function render() {
-        include plugin_dir_path(__FILE__) . '../../../templates/Pages/Dashboard.php';
+        include plugin_dir_path(__FILE__) . '../../templates/Pages/Dashboard.php';
     }
 
     public static function render_settings() {
-        include plugin_dir_path(__FILE__) . '../../../templates/Pages/Settings.php';
+       include plugin_dir_path(__FILE__) .'../../templates/Pages/Settings.php';
     }
 }
