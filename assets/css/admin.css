@@ -2,11 +2,12 @@
 
 .easy-ai-blogger-dashboard {
     background: #fff;
-    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 32px 24px;
     max-width: 900px;
-    margin: 30px auto;
+    margin: 32px auto;
+    font-size: 16px;
 }
 
 .easy-ai-blogger-dashboard h1 {
@@ -20,6 +21,8 @@
 }
 
 .eab-step {
+    display: none;
+    animation: fadeIn 0.3s;
     margin-bottom: 32px;
     padding: 24px;
     background: #f8f9fa;
@@ -40,23 +43,20 @@ label {
     margin-bottom: 4px;
 }
 input[type="text"], textarea, select {
-    padding: 6px 8px;
-    border: 1px solid #ccd0d4;
-    border-radius: 2px;
-    margin-bottom: 12px;
     width: 100%;
-    max-width: 500px;
-    box-sizing: border-box;
-    background: #fff;
+    padding: 10px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
     font-size: 15px;
-    color: #23282d;
+    background: #f8f9fa;
+    margin-bottom: 12px;
 }
 button, .button, .easy-ai-blogger-skip {
-    background: #0073aa;
+    background: #007cba;
     color: #fff;
     border: none;
-    border-radius: 3px;
-    padding: 8px 18px;
+    border-radius: 4px;
+    padding: 10px 20px;
     margin: 8px 4px 8px 0;
     cursor: pointer;
     font-size: 15px;
@@ -65,14 +65,12 @@ button, .button, .easy-ai-blogger-skip {
     box-shadow: 0 1px 0 #ccd0d4;
 }
 button:hover, .button:hover, .easy-ai-blogger-skip:hover {
-    background: #005177;
+    background: #005a9e;
     color: #fff;
 }
 .easy-ai-blogger-skip {
-    background: #f1f1f1;
-    color: #23282d;
-    border: 1px solid #ccd0d4;
-    box-shadow: none;
+    background: #f0ad4e;
+    color: #fff;
 }
 .easy-ai-blogger-skip:hover {
     background: #e2e2e2;
@@ -119,33 +117,97 @@ button:hover, .button:hover, .easy-ai-blogger-skip:hover {
 }
 .easy-ai-blogger-steps {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     margin-bottom: 32px;
-    gap: 16px;
 }
 .easy-ai-blogger-step {
-    display: flex;
-    align-items: center;
+    flex: 1;
+    text-align: center;
+    position: relative;
     font-weight: 500;
     color: #888;
-    background: #f1f1f1;
-    border-radius: 20px;
-    padding: 6px 18px;
-    font-size: 15px;
-    transition: background 0.2s, color 0.2s;
+    transition: color 0.2s;
 }
 .easy-ai-blogger-step.active {
-    background: #0073aa;
-    color: #fff;
+    color: #007cba;
 }
 .easy-ai-blogger-step.completed {
-    background: #00b894;
-    color: #fff;
+    color: #46b450;
 }
 .easy-ai-blogger-step:not(:last-child)::after {
-    content: '\2192';
-    margin-left: 12px;
-    color: #bbb;
-    font-size: 1.2em;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 80%;
+    height: 2px;
+    background: #e5e5e5;
+    z-index: 0;
+    transform: translateY(-50%);
+}
+.easy-ai-blogger-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.easy-ai-blogger-form label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+.easy-ai-blogger-form input[type="text"],
+.easy-ai-blogger-form textarea,
+.easy-ai-blogger-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    font-size: 15px;
+    background: #f8f9fa;
+    margin-bottom: 12px;
+}
+.easy-ai-blogger-form .eab-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+.easy-ai-blogger-form button,
+.easy-ai-blogger-form .easy-ai-blogger-skip {
+    background: #007cba;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.easy-ai-blogger-form button:hover,
+.easy-ai-blogger-form .easy-ai-blogger-skip:hover {
+    background: #005a9e;
+}
+.easy-ai-blogger-form .easy-ai-blogger-skip {
+    background: #f0ad4e;
+    color: #fff;
+}
+.easy-ai-blogger-generated {
+    background: #f6f8fa;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.7;
+}
+.easy-ai-blogger-form .eab-step h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: #23282d;
+}
+.easy-ai-blogger-form .eab-step p {
+    margin-bottom: 12px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
