@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
                 });
 
                 formatted = '<p>' + formatted + '</p>';
-                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br>' + formatted);
+                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br><div class="easy-ai-blogger-generated">' + formatted + '</div>');
             } else {
                 $('#eab-generated-content').html('<span style="color:red;">Error generating content.</span>');
             }
