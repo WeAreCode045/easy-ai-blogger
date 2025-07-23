@@ -1,4 +1,4 @@
-/* Easy AI Blogger Admin Styles */
+/* Easy AI Blogger Admin Styles - WordPress Standardized */
 
 .easy-ai-blogger-dashboard {
     background: #fff;
@@ -36,29 +36,47 @@
 label {
     font-weight: 500;
     margin-right: 8px;
+    display: block;
+    margin-bottom: 4px;
 }
 input[type="text"], textarea, select {
-    padding: 8px;
+    padding: 6px 8px;
     border: 1px solid #ccd0d4;
-    border-radius: 4px;
+    border-radius: 2px;
     margin-bottom: 12px;
     width: 100%;
     max-width: 500px;
     box-sizing: border-box;
+    background: #fff;
+    font-size: 15px;
+    color: #23282d;
 }
-button {
+button, .button, .easy-ai-blogger-skip {
     background: #0073aa;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     padding: 8px 18px;
     margin: 8px 4px 8px 0;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 15px;
+    line-height: 1.5;
     transition: background 0.2s;
+    box-shadow: 0 1px 0 #ccd0d4;
 }
-button:hover {
+button:hover, .button:hover, .easy-ai-blogger-skip:hover {
     background: #005177;
+    color: #fff;
+}
+.easy-ai-blogger-skip {
+    background: #f1f1f1;
+    color: #23282d;
+    border: 1px solid #ccd0d4;
+    box-shadow: none;
+}
+.easy-ai-blogger-skip:hover {
+    background: #e2e2e2;
+    color: #23282d;
 }
 .eab-image-tabs {
     margin-bottom: 12px;
@@ -71,7 +89,7 @@ button:hover {
     padding: 8px 16px;
     margin-right: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 15px;
 }
 .eab-image-tab.active {
     background: #0073aa;
@@ -98,4 +116,36 @@ button:hover {
 }
 #eab-save-success {
     margin-top: 16px;
+}
+.easy-ai-blogger-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+.easy-ai-blogger-step {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #888;
+    background: #f1f1f1;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 15px;
+    transition: background 0.2s, color 0.2s;
+}
+.easy-ai-blogger-step.active {
+    background: #0073aa;
+    color: #fff;
+}
+.easy-ai-blogger-step.completed {
+    background: #00b894;
+    color: #fff;
+}
+.easy-ai-blogger-step:not(:last-child)::after {
+    content: '\2192';
+    margin-left: 12px;
+    color: #bbb;
+    font-size: 1.2em;
 }
