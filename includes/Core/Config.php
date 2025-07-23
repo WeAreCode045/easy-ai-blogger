@@ -11,7 +11,7 @@ class Config {
         add_settings_section(
             'easy_ai_blogger_main',
             __('Main Settings', 'easy-ai-blogger'),
-            null,
+            function() {},
             'easy-ai-blogger-settings'
         );
         add_settings_field(
