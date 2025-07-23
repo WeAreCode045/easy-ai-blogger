@@ -53,7 +53,7 @@ class AiHandler {
             'messages' => [
                 ['role' => 'user', 'content' => $prompt]
             ],
-            'max_tokens' => 256
+            'max_tokens' => 5000
         ];
         $response = wp_remote_post('https://api.openai.com/v1/chat/completions', [
             'headers' => [
