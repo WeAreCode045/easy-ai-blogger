@@ -1,7 +1,7 @@
 <?php
 /* Plugin Name: Easy AI Blogger
  * Description: A WordPress plugin to enhance blogging with AI capabilities.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: WeAreCode045
  * Author URI: https://github.com/WeAreCode045
  * License: GPL2
