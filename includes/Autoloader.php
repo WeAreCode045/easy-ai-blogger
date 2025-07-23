@@ -10,7 +10,8 @@ class Autoloader {
         if (strpos($className, 'EasyAiBlogger\\') !== 0) {
             return;
         }
-        $baseDir = dirname(__DIR__) . '/';
+        // Get plugin root directory
+        $baseDir = dirname(__DIR__, 1) . DIRECTORY_SEPARATOR;
         $relativeClass = substr($className, strlen('EasyAiBlogger\\'));
         $file = $baseDir . str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $relativeClass) . '.php';
         if (file_exists($file)) {
@@ -18,4 +19,3 @@ class Autoloader {
         }
     }
 }
-Autoloader::register();
