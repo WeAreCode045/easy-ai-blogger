@@ -15,7 +15,15 @@ jQuery(document).ready(function($) {
             _ajax_nonce: EasyAiBloggerAjax.nonce
         }, function(response) {
             if (response.success) {
-                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br>' + response.data.content);
+                // Try to auto-format the AI response with basic HTML
+                var formatted = response.data.content
+                    .replace(/\n\n+/g, '</p><p>') // double line breaks to paragraphs
+                    .replace(/\n/g, '<br>') // single line breaks to <br>
+                    .replace(/^(#+)\s*(.*)$/gm, function(match, hashes, text) {
+                        var level = hashes.length;
+                        return '<h' + level + '>' + text + '</h' + level + '>';
+                    });
+                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br><div class="easy-ai-blogger-generated">' + formatted + '</div>');
             } else {
                 $('#eab-generated-content').html('<span style="color:red;">Error generating content.</span>');
             }
@@ -23,3 +31,17 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
+<style>
+.easy-ai-blogger-generated h1, .easy-ai-blogger-generated h2, .easy-ai-blogger-generated h3 {
+    color: #0073aa;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+}
+.easy-ai-blogger-generated p {
+    margin: 0 0 1em 0;
+    line-height: 1.7;
+}
+.easy-ai-blogger-generated br {
+    margin-bottom: 0.5em;
+}
+</style>
