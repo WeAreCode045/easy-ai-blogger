@@ -10,7 +10,8 @@
  * Domain Path: /languages
  */
 
-define('EASY_AI_BLOGGER_VERSION', '1.0.2');
+$wpversion = get_bloginfo('version');
+define('EASY_AI_BLOGGER_VERSION', $wpversion );
 define('EASY_AI_BLOGGER_DIR', plugin_dir_path(__FILE__));
 define('EASY_AI_BLOGGER_URL', plugin_dir_url(__FILE__));
 // Load plugin text domain for translations
