@@ -47,11 +47,15 @@ class AiHandler {
 
     private static function call_openai_api($type, $content, $api_key) {
         if (!$api_key) return '';
+        $instructions_content = trim(get_option('easy_ai_blogger_instructions_content', ''));
+        $instructions_title = trim(get_option('easy_ai_blogger_instructions_title', ''));
+        $instructions_category = trim(get_option('easy_ai_blogger_instructions_category', ''));
+        $instructions_tags = trim(get_option('easy_ai_blogger_instructions_tags', ''));
         $prompts = [
-            'blog_content' => get_option('easy_ai_blogger_prompt_content', 'Write a complete blog post based on this sample: {input}'),
-            'title'        => get_option('easy_ai_blogger_prompt_title', 'Suggest a catchy blog post title for this content: {input}'),
-            'category'     => get_option('easy_ai_blogger_prompt_category', 'Suggest the most relevant category for this blog post: {input}'),
-            'tags'         => get_option('easy_ai_blogger_prompt_tags', 'Suggest relevant tags for this blog post: {input}'),
+            'blog_content' => "Write a complete blog post based on this sample: {input}." . ($instructions_content ? ("\nInstructions:\n" . $instructions_content) : ''),
+            'title'        => "Suggest a catchy blog post title for this content: {input}." . ($instructions_title ? ("\nInstructions:\n" . $instructions_title) : ''),
+            'category'     => "Suggest the most relevant category for this blog post: {input}." . ($instructions_category ? ("\nInstructions:\n" . $instructions_category) : ''),
+            'tags'         => "Suggest relevant tags for this blog post: {input}." . ($instructions_tags ? ("\nInstructions:\n" . $instructions_tags) : ''),
         ];
         $prompt = isset($prompts[$type]) ? str_replace('{input}', $content, $prompts[$type]) : $content;
         $body = [
