@@ -12,12 +12,13 @@ class AiHandler {
 
     public static function generate_content() {
         check_ajax_referer('easy_ai_blogger_nonce');
-        $sample_text = isset($_POST['sample_text']) ? sanitize_text_field($_POST['sample_text']) : '';
+        $content_field = get_option('easy_ai_blogger_content_field', 'eab-sample-text');
+        $content_value = isset($_POST[$content_field]) ? sanitize_text_field($_POST[$content_field]) : '';
         $api_key = get_option('easy_ai_blogger_openai_token', '');
-        $response = self::call_openai_api('blog_content', $sample_text, $api_key);
+        $response = self::call_openai_api('blog_content', $content_value, $api_key);
         if (empty($response)) {
-            error_log('Easy AI Blogger: Empty AI response. Sample text: ' . $sample_text . ' | API Key: ' . ($api_key ? 'set' : 'missing'));
-            wp_send_json_error(['message' => 'AI did not return any content. Please check your API key, prompt, and sample text.']);
+            error_log('Easy AI Blogger: Empty AI response. Content field: ' . $content_field . ' | Value: ' . $content_value . ' | API Key: ' . ($api_key ? 'set' : 'missing'));
+            wp_send_json_error(['message' => 'AI did not return any content. Please check your API key, prompt, and selected content field.']);
         } else {
             wp_send_json_success(['content' => $response]);
         }
