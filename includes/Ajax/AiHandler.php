@@ -66,8 +66,15 @@ class AiHandler {
             ],
             'body' => wp_json_encode($body),
         ]);
-        if (is_wp_error($response)) return '';
-        $data = json_decode(wp_remote_retrieve_body($response), true);
+        if (is_wp_error($response)) {
+            error_log('Easy AI Blogger: OpenAI API error - ' . $response->get_error_message());
+            return '';
+        }
+        $raw_body = wp_remote_retrieve_body($response);
+        $data = json_decode($raw_body, true);
+        if (empty($data['choices'][0]['message']['content'])) {
+            error_log('Easy AI Blogger: OpenAI raw response: ' . $raw_body);
+        }
         return $data['choices'][0]['message']['content'] ?? '';
     }
     public static function search_images() {
