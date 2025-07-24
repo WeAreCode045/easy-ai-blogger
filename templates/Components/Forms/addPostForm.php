@@ -9,32 +9,32 @@
         <?php include __DIR__ . '/../../Components/Steps/addContent.php'; ?>
         <div class="easy-ai-blogger-nav">
             <button type="button" class="button button-primary eab-next-step">Next</button>
-            <button type="button" class="button easy-ai-blogger-skip" data-skip="2">Skip to Meta</button>
-            <button type="button" class="button easy-ai-blogger-skip" data-skip="3">Skip to Images</button>
-            <button type="button" class="button easy-ai-blogger-skip" data-skip="4">Skip to Review</button>
+            <button type="button" class="button button-secondary easy-ai-blogger-skip" data-skip="2">Skip to Meta</button>
+            <button type="button" class="button button-secondary easy-ai-blogger-skip" data-skip="3">Skip to Images</button>
+            <button type="button" class="button button-secondary easy-ai-blogger-skip" data-skip="4">Skip to Review</button>
         </div>
     </div>
     <div id="eab-step-2" class="eab-step" style="display:none;">
         <?php include __DIR__ . '/../../Components/Steps/addPostMeta.php'; ?>
         <div class="easy-ai-blogger-nav">
-            <button type="button" class="button eab-prev-step">Previous</button>
+            <button type="button" class="button button-primary eab-prev-step">Previous</button>
             <button type="button" class="button button-primary eab-next-step">Next</button>
-            <button type="button" class="button easy-ai-blogger-skip" data-skip="3">Skip to Images</button>
+            <button type="button" class="button button-secondary easy-ai-blogger-skip" data-skip="3">Skip to Images</button>
             <button type="button" class="button easy-ai-blogger-skip" data-skip="4">Skip to Review</button>
         </div>
     </div>
     <div id="eab-step-3" class="eab-step" style="display:none;">
         <?php include __DIR__ . '/../../Components/Steps/addImages.php'; ?>
         <div class="easy-ai-blogger-nav">
-            <button type="button" class="button eab-prev-step">Previous</button>
+            <button type="button" class="button button-primary eab-prev-step">Previous</button>
             <button type="button" class="button button-primary eab-next-step">Next</button>
-            <button type="button" class="button easy-ai-blogger-skip" data-skip="4">Skip to Review</button>
+            <button type="button" class="button button-secondary easy-ai-blogger-skip" data-skip="4">Skip to Review</button>
         </div>
     </div>
     <div id="eab-step-4" class="eab-step" style="display:none;">
         <?php include __DIR__ . '/../../Components/Steps/PostReview.php'; ?>
         <div class="easy-ai-blogger-nav">
-            <button type="button" class="button eab-prev-step">Previous</button>
+            <button type="button" class="button button-primary eab-prev-step">Previous</button>
         </div>
     </div>
 </form>
