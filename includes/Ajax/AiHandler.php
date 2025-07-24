@@ -64,7 +64,11 @@ class AiHandler {
                 ['role' => 'user', 'content' => $prompt]
             ]
         ];
-        $response = wp_remote_post('https://api.openai.com/v1/chat/completions', [
+        $api_url = 'https://api.openai.com/v1/chat/completions';
+        error_log('Easy AI Blogger: OpenAI API request to ' . $api_url);
+        error_log('Easy AI Blogger: OpenAI API prompt: ' . $prompt);
+        error_log('Easy AI Blogger: OpenAI API request body: ' . wp_json_encode($body));
+        $response = wp_remote_post($api_url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $api_key,
                 'Content-Type' => 'application/json',
@@ -76,9 +80,10 @@ class AiHandler {
             return '';
         }
         $raw_body = wp_remote_retrieve_body($response);
+        error_log('Easy AI Blogger: OpenAI API raw response: ' . $raw_body);
         $data = json_decode($raw_body, true);
         if (empty($data['choices'][0]['message']['content'])) {
-            error_log('Easy AI Blogger: OpenAI raw response: ' . $raw_body);
+            error_log('Easy AI Blogger: OpenAI parsed response is empty.');
         }
         return $data['choices'][0]['message']['content'] ?? '';
     }
