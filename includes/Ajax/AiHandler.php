@@ -16,9 +16,9 @@ class AiHandler {
         $content_value = isset($_POST[$content_field]) ? sanitize_text_field($_POST[$content_field]) : '';
         $api_key = get_option('easy_ai_blogger_openai_token', '');
         $response = self::call_openai_api('blog_content', $content_value, $api_key);
-        if (empty($response)) {
+        if (empty($response) || strpos($response, '[OpenAI Error]') === 0) {
             error_log('Easy AI Blogger: Empty AI response. Content field: ' . $content_field . ' | Value: ' . $content_value . ' | API Key: ' . ($api_key ? 'set' : 'missing'));
-            wp_send_json_error(['message' => 'AI did not return any content. Please check your API key, prompt, and selected content field.']);
+            wp_send_json_error(['message' => $response ?: 'AI did not return any content. Please check your API key, prompt, and selected content field.']);
         } else {
             wp_send_json_success(['content' => $response]);
         }
@@ -82,6 +82,10 @@ class AiHandler {
         $raw_body = wp_remote_retrieve_body($response);
         error_log('Easy AI Blogger: OpenAI API raw response: ' . $raw_body);
         $data = json_decode($raw_body, true);
+        if (isset($data['error']['message'])) {
+            error_log('Easy AI Blogger: OpenAI API error message: ' . $data['error']['message']);
+            return '[OpenAI Error] ' . $data['error']['message'];
+        }
         if (empty($data['choices'][0]['message']['content'])) {
             error_log('Easy AI Blogger: OpenAI parsed response is empty.');
         }
