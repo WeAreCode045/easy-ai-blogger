@@ -18,7 +18,8 @@ class AiHandler {
         $response = self::call_openai_api('blog_content', $content_value, $api_key);
         if (empty($response) || strpos($response, '[OpenAI Error]') === 0) {
             error_log('Easy AI Blogger: Empty AI response. Content field: ' . $content_field . ' | Value: ' . $content_value . ' | API Key: ' . ($api_key ? 'set' : 'missing'));
-            wp_send_json_error(['message' => $response ?: 'AI did not return any content. Please check your API key, prompt, and selected content field.']);
+            $error_message = $response ?: 'AI did not return any content. Please check your API key, prompt, and selected content field.';
+            wp_send_json_error(['message' => $error_message, 'raw_content' => $content_value, 'api_key_set' => !empty($api_key)]);
         } else {
             wp_send_json_success(['content' => $response]);
         }
