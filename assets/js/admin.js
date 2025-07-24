@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Show formatted AI content
+    // Step 1: AI Content Generation
     $('#eab-generate-content').on('click', function() {
         var sampleText = $('#eab-sample-text').val();
         $('#eab-generated-content').html('<em>Generating blog content...</em>');
@@ -53,16 +53,108 @@ jQuery(document).ready(function($) {
         }, function(response) {
             if (response.success) {
                 var formatted = response.data.content
-                    .replace(/\n\n+/g, '</p><p>')
-                    .replace(/\n/g, '<br>')
                     .replace(/^(#+)\s*(.*)$/gm, function(match, hashes, text) {
                         var level = hashes.length;
                         return '<h' + level + '>' + text + '</h' + level + '>';
-                    });
-                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br><div class="easy-ai-blogger-generated">' + formatted + '</div>');
+                    })
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/__(.*?)__/g, '<strong>$1</strong>')
+                    .replace(/_(.*?)_/g, '<u>$1</u>')
+                    .replace(/^>\s?(.*)$/gm, '<blockquote>$1</blockquote>')
+                    .replace(/(^|\n)[\*-]\s(.*)/g, function(match, p1, item) {
+                        return p1 + '<li>' + item + '</li>';
+                    })
+                    .replace(/(^|\n)\d+\.\s(.*)/g, function(match, p1, item) {
+                        return p1 + '<li>' + item + '</li>';
+                    })
+                    .replace(/\n\n+/g, function() {
+                        return '</p><p>';
+                    })
+                    .replace(/\n/g, '<br />');
+                formatted = formatted.replace(/(<li>.*?<\/li>)+/g, function(match) {
+                    if (/\d+\./.test(match)) {
+                        return '<ol>' + match + '</ol>';
+                    } else {
+                        return '<ul>' + match + '</ul>';
+                    }
+                });
+                formatted = '<p>' + formatted + '</p>';
+                $('#eab-generated-content').html('<strong>Generated Blog Content:</strong><br>' + formatted);
             } else {
                 $('#eab-generated-content').html('<span style="color:red;">Error generating content.</span>');
             }
         });
+    });
+
+    // Step 3: Image Search
+    $('#eab-search-images').on('click', function() {
+        var keyword = $('#eab-image-search').val();
+        $('#eab-image-results').html('<em>Searching images...</em>');
+        $.post(EasyAiBloggerAjax.ajax_url, {
+            action: 'easy_ai_search_images',
+            keyword: keyword,
+            _ajax_nonce: EasyAiBloggerAjax.nonce
+        }, function(response) {
+            if (response.success && response.data.images.length) {
+                var html = '<div class="easy-ai-blogger-image-list">';
+                response.data.images.forEach(function(img) {
+                    html += '<img src="' + img.url + '" alt="' + img.title + '" style="max-width:120px;margin:8px;cursor:pointer;" />';
+                });
+                html += '</div>';
+                $('#eab-image-results').html(html);
+            } else {
+                $('#eab-image-results').html('<span style="color:red;">No images found.</span>');
+            }
+        });
+    });
+
+    // Step 4: Review & Save
+    function populateReview() {
+        var reviewHtml = '';
+        reviewHtml += '<h3>Content</h3>' + $('#eab-generated-content').html();
+        reviewHtml += '<h3>Title</h3><p>' + $('#eab-title').val() + '</p>';
+        reviewHtml += '<h3>Category</h3><p>' + $('#eab-category').val() + '</p>';
+        reviewHtml += '<h3>Tags</h3><p>' + $('#eab-tags').val() + '</p>';
+        var images = $('.easy-ai-blogger-image-list img.selected');
+        if (images.length) {
+            reviewHtml += '<h3>Images</h3>';
+            images.each(function() {
+                reviewHtml += '<img src="' + $(this).attr('src') + '" style="max-width:120px;margin:8px;" />';
+            });
+        }
+        $('#eab-review-content').html(reviewHtml);
+    }
+    $('.eab-next-step').on('click', function() {
+        if (currentStep === 3) {
+            populateReview();
+        }
+    });
+    $('#easy-ai-blogger-multistep-form').on('submit', function(e) {
+        e.preventDefault();
+        var postData = {
+            action: 'easy_ai_save_post',
+            _ajax_nonce: EasyAiBloggerAjax.nonce,
+            content: $('#eab-generated-content').html(),
+            title: $('#eab-title').val(),
+            category: $('#eab-category').val(),
+            tags: $('#eab-tags').val(),
+            images: []
+        };
+        $('.easy-ai-blogger-image-list img.selected').each(function() {
+            postData.images.push($(this).attr('src'));
+        });
+        $('#eab-review-content').html('<em>Saving...</em>');
+        $.post(EasyAiBloggerAjax.ajax_url, postData, function(response) {
+            if (response.success) {
+                $('#eab-review-content').html('<span style="color:green;">Blog post saved!</span>');
+            } else {
+                $('#eab-review-content').html('<span style="color:red;">Error saving post.</span>');
+            }
+        });
+    });
+
+    // Image selection
+    $(document).on('click', '.easy-ai-blogger-image-list img', function() {
+        $(this).toggleClass('selected');
     });
 });

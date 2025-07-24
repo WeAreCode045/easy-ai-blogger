@@ -115,6 +115,76 @@ button:hover, .button:hover, .easy-ai-blogger-skip:hover {
 #eab-save-success {
     margin-top: 16px;
 }
+
+/* Multistep form steps and navigation */
+.easy-ai-blogger-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+.easy-ai-blogger-step {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #888;
+    background: #f1f1f1;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+.easy-ai-blogger-step.active {
+    background: #0073aa;
+    color: #fff;
+}
+.easy-ai-blogger-step.completed {
+    background: #00b894;
+    color: #fff;
+}
+.easy-ai-blogger-step:not(:last-child)::after {
+    content: '\2192';
+    margin-left: 12px;
+    color: #bbb;
+    font-size: 1.2em;
+}
+.easy-ai-blogger-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+.easy-ai-blogger-generated {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px;
+    min-height: 80px;
+    margin-bottom: 16px;
+}
+.easy-ai-blogger-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+.easy-ai-blogger-image-list img {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+.easy-ai-blogger-image-list img.selected {
+    border: 2px solid #0073aa;
+}
+#eab-review-content {
+    background: #f8f9fa;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
 .easy-ai-blogger-steps {
     display: flex;
     justify-content: center;
