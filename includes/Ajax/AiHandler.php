@@ -15,7 +15,12 @@ class AiHandler {
         $sample_text = isset($_POST['sample_text']) ? sanitize_text_field($_POST['sample_text']) : '';
         $api_key = get_option('easy_ai_blogger_openai_token', '');
         $response = self::call_openai_api('blog_content', $sample_text, $api_key);
-        wp_send_json_success(['content' => $response]);
+        if (empty($response)) {
+            error_log('Easy AI Blogger: Empty AI response. Sample text: ' . $sample_text . ' | API Key: ' . ($api_key ? 'set' : 'missing'));
+            wp_send_json_error(['message' => 'AI did not return any content. Please check your API key, prompt, and sample text.']);
+        } else {
+            wp_send_json_success(['content' => $response]);
+        }
     }
     public static function suggest_title() {
         check_ajax_referer('easy_ai_blogger_nonce');
